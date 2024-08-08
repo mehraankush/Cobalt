@@ -74,7 +74,7 @@ const Page = ({ params }: { params: { id: string } }) => {
 
                 <div className='py-10 '>
                     <p className='text-center text-xl uppercase'>Ingredients</p>
-                    <div className='px-5 grid grid-cols-3 gap-8 pt-5'>
+                    <div className='px-5 grid md:grid-cols-2 lg:grid-cols-3 gap-8 pt-5'>
                         {
                             recipeDetails?.extendedIngredients?.map((rec:any, i:number) => (
                                 <div key={i} className='w-full shadow p-5 space-y-2 dark:bg-slate-800 rounded'>

@@ -19,7 +19,7 @@ const Instructions = ({ step , i}: any) => {
                 </div>
                 <div className='flex flex-col gap-5 w-[80%]'>
                     <p className='font-medium text-center text-slate-500'>Equipment</p>
-                    <div className='grid grid-cols-3 w-full gap-5 px-5'>
+                    <div className='grid lg:grid-cols-3 w-full gap-5 px-5'>
                         {
                             step?.equipment?.length > 0 ? (
                                 step.equipment.map((equip: any, i: number) => (

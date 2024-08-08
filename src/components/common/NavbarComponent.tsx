@@ -35,9 +35,9 @@ const NavbarComponent = () => {
 
   return (
     <header className='w-full max-w-6xl mx-auto mt-5'>
-      <div className='flex justify-between items-center w-full p-3'>
+      <div className='flex justify-between items-center w-full p-3 px-5 lg:px-0'>
         <Link href={'/'}>
-          <h1 className='font-bold text-xl'>Cobalt Meals</h1>
+          <h1 className='font-bold text-2xl'>Cobalt Meals</h1>
         </Link>
         <div className='flex gap-5 items-center'>
           <ThemeSwitch />
