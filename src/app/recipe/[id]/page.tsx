@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { BiSolidLike } from "react-icons/bi";
@@ -16,7 +16,12 @@ const Page = ({ params }: { params: { id: string } }) => {
     const { data: recipe } = useGetSingleRecipies(params.id)
     const [recipeDetails, setrecipeDetails] = useState(recipe || DummtRecipeDetails)
  
-    const summary = HTMLReactParser(recipeDetails?.summary)
+   
+
+    useEffect(() => {
+        setrecipeDetails(recipe)    
+    }, [recipe])
+    const summary = HTMLReactParser(recipeDetails?.summary || '')
 
     return (
         <section className='max-h-screen'>
