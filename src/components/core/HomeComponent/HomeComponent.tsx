@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 import { MdFavorite } from "react-icons/md";
 import { IoSearchOutline } from "react-icons/io5";
 import { useAppDispatch } from '@/Redux/hooks';
+import { Oval } from 'react-loader-spinner'
 
 import {
     Card,
@@ -29,7 +30,7 @@ const HomeComponent = () => {
     const [searchInput, setSearchInput] = useState('');
     const { mutate } = useGetQueriedRecipies()
     const [allRecipes, setallRecipes] = useState<any>(AllRecipes || DummyRecipes);
-    
+
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
         setSearchInput(value);
@@ -99,7 +100,7 @@ const HomeComponent = () => {
                         allRecipes?.results?.map((recipe: any, i: number) => (
                             <Card
                                 key={i}
-                          
+
                                 className="w-[400px] cursor-pointer rounded dark:bg-slate-900"
                             >
                                 <CardHeader className='p-3 flex justify-center'
@@ -139,8 +140,19 @@ const HomeComponent = () => {
                     }
                 </div>
             </div>
-            {allRecipes.length===0 && <p className='text-center w-full dark:text-white'>Try Something Else No Result Found...</p>}
-            {isLoading && <p className='text-center w-full dark:text-white'>Loading ...</p>}
+            {allRecipes.length === 0 && <p className='text-center w-full dark:text-white'>Try Something Else No Result Found...</p>}
+            {isLoading && <div className='flex justify-center py-10'>
+                <Oval
+                    visible={true}
+                    height="80"
+                    width="80"
+                    color="#4fa94d"
+                    ariaLabel="oval-loading"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                />
+            </div>
+            }
             {/* <InfiniteScroll fetchMore={fetchAllRecipies} loadingComponent={<p>Loading...</p>}>
                 {(items: any) => JSON.stringify(items)}
             </InfiniteScroll> */}
