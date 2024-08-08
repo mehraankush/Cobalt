@@ -16,7 +16,7 @@ const Page = ({ params }: { params: { id: string } }) => {
     const { data: recipe } = useGetSingleRecipies(params.id)
     const [recipeDetails, setrecipeDetails] = useState(recipe || DummtRecipeDetails)
  
-    const summary = HTMLReactParser(recipe?.summary)
+    const summary = HTMLReactParser(recipeDetails?.summary)
 
     return (
         <section className='max-h-screen'>
@@ -27,7 +27,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                         <p className='text-light text-lg text-center'>Type</p>
                         <div className='flex flex-col gap-5'>
                             {
-                                recipe?.dishTypes?.map((diet: any, i: number) => (
+                                recipeDetails?.dishTypes?.map((diet: any, i: number) => (
                                     <p key={i} className='text-green-500 text-center'>{diet}</p>
                                 ))
                             }
@@ -35,11 +35,11 @@ const Page = ({ params }: { params: { id: string } }) => {
                     </div>
 
                     <div className='w-[80%]'>
-                        <p className='text-center text-5xl font-thin italic'>{recipe?.title}</p>
+                        <p className='text-center text-5xl font-thin italic'>{recipeDetails?.title}</p>
                         <Image
                             width={1000}
                             height={1000}
-                            src={recipe?.image}
+                            src={recipeDetails?.image}
                             alt="recipe image"
                             className='w-[1100px] pt-5 h-[500px] object-cover rounded-md'
                         />
@@ -52,18 +52,18 @@ const Page = ({ params }: { params: { id: string } }) => {
 
                         <div className='flex gap-1 items-center'>
                             <BiSolidLike size={23} />
-                            <p>{recipe?.aggregateLikes}</p>
+                            <p>{recipeDetails?.aggregateLikes}</p>
                         </div>
                         <div className='flex gap-1 items-center'>
                             <LuClock8 size={23} />
-                            <p>{recipe?.readyInMinutes}min</p>
+                            <p>{recipeDetails?.readyInMinutes}min</p>
                         </div>
                         <div className='flex gap-1 items-center'>
                             <RiMoneyRupeeCircleFill size={23} />
-                            <p>{recipe?.pricePerServing}</p>
+                            <p>{recipeDetails?.pricePerServing}</p>
                         </div>
                     </div>
-                    <Link href={recipe?.sourceUrl || '#'}>
+                    <Link href={recipeDetails?.sourceUrl || '#'}>
                             <p className='text-blue-600 underline dark:text-white'>Source</p>
                         </Link>
                 </div>
@@ -76,7 +76,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                     <p className='text-center text-xl uppercase'>Ingredients</p>
                     <div className='px-5 grid grid-cols-3 gap-8 pt-5'>
                         {
-                            recipe?.extendedIngredients?.map((rec:any, i:number) => (
+                            recipeDetails?.extendedIngredients?.map((rec:any, i:number) => (
                                 <div key={i} className='w-full shadow p-5 space-y-2 dark:bg-slate-800 rounded'>
                                     <p className='text-center text-xl  font-light capitalize'>{rec?.name || "Ingredients"}</p>
                                     <p className='h-[50px] overflow-hidden text-slate-500 dark:text-slate-400'>{rec?.originalName}</p>
@@ -115,5 +115,4 @@ const Page = ({ params }: { params: { id: string } }) => {
         </section >
     )
 }
-
 export default Page
