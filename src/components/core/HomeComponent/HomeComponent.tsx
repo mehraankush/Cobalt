@@ -58,6 +58,10 @@ const HomeComponent = () => {
     }
 
     const handleUserQuery = async () => {
+        if (!session) {
+            router.push('/login')
+            return;
+        }
         mutate({ q: searchInput }, {
             onSuccess: (data) => {
                 console.log("Query Result", data)
