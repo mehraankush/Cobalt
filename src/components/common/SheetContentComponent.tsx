@@ -9,7 +9,7 @@ import {
     SheetTitle,
 } from "@/components/ui/sheet"
 import { Button } from '../ui/button'
-import { Card, CardHeader } from '../ui/card'
+import { Card } from '../ui/card'
 import Image from 'next/image'
 import { Minus, Plus, X } from 'lucide-react'
 import { useAppDispatch, useAppSelector } from '@/Redux/hooks'
@@ -18,10 +18,10 @@ import { MdDeleteForever } from "react-icons/md";
 
 
 const SheetContentComponent = () => {
+
     const [count, setCount] = useState(1);
     const dispatch = useAppDispatch()
     const cartItems = useAppSelector(state => state.cart.items);
-    console.log(cartItems, "cartItems")
 
     const handleRemoveFromCart = (title:string) => {
         dispatch(removeFromCart(title));

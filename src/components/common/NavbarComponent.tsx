@@ -25,14 +25,13 @@ import ThemeSwitch from './ThemeSwitch';
 import { useAppSelector } from '@/Redux/hooks';
 import { MdFavorite } from 'react-icons/md';
 import { signIn, signOut, useSession } from 'next-auth/react';
-import Image from 'next/image';
 
 
 
 const NavbarComponent = () => {
+
   const { data: session } = useSession()
   const cartCount = useAppSelector(state => state.cart.count);
-  console.log(session, "session")
 
   return (
     <header className='w-full max-w-6xl mx-auto mt-5'>
