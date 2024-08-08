@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Cobalt Meals
 
-## Getting Started
+## Overview
 
-First, run the development server:
+Welcome to the Cobalt Meals! This application allows users to search for recipes, view detailed instructions, and manage their favorite recipes. The app is built with Next.js, styled using Tailwind Css , Shadcn, and includes several advanced features such as authentication, dark/light mode, and infinite scrolling.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **User Interface**: Built with Next.js and styled using Shadcn. Icons are provided by React Icons.
+- **Authentication**: Secure user authentication implemented with NextAuth.
+- **Recipe API**: Integrated with the Spoonacular API for fetching recipes.
+- **Data Fetching**: Utilizes React Query for efficient data fetching, with built-in debouncing and infinite scroll.
+- **Theme Support**: Dark mode and light mode support using NextThemes.
+- **Favorites Management**: Redux is used to manage the addition of favorite recipes to the cart.
+- **Slack Channel INtegration** Using Next-auth you can integration yopu slack channel by the permission of your admin.
+  
+## Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Frontend**: Next.js, Shadcn/ui ,Taildonw CSS , React Icons
+- **State Management**: Redux , @redux/tooltik , react-redux
+- **Authentication**: NextAuth , Google Provider , Slack Provider
+- **API**: Spoonacular API (Recipe API)
+- **Data Fetching**: React Query/tanstack
+- **Styling**: Shadcn, NextThemes ,Tailwind CSS
+- **Deployment**: Vercel (suggested for production)
+  
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
+## Installation
 
-To learn more about Next.js, take a look at the following resources:
+1. **Clone the repository**:
+    ```bash
+    git clone https://github.com/your-username/recipe-app.git
+    https://github.com/mehraankush/Cobalt
+    cd Cobalt
+    ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. **Install dependencies**:
+    ```bash
+    npm install
+    ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+3. **Set up environment variables**: Create a `.env.local` file in the root of your project and add the following:
 
-## Deploy on Vercel
+    ```bash
+    NEXTAUTH_URL=http://localhost:3000
+    
+    NEXT_PUBLIC_RECIPE_API=https://api.spoonacular.com/recipes
+    NEXT_PUBLIC_API_KEY=********************
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    NEXT_PUBLIC_GOOGLE_CLIENT_ID=************************
+    NEXT_PUBLIC_GOOGLE_CLIENT_SECRET=************************
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+    NEXT_PUBLIC_SLACK_CLIENT_ID=***************************
+    NEXT_PUBLIC_SLACK_CLIENT_SECRET=****************************
+    
+    NEXTAUTH_SECRET=***********************
+    ```
+
+4. **Run the development server**:
+    ```bash
+    npm run dev
+    ```
+
+      
+## Challenges
+
+- **Slack Authentication**: During development, Slack did not allow HTTP for authentication on local servers. To overcome this, i have to use ngrok was used to create a secure tunnel, marking my first experience with this tool.
+   - Install ngrok: https://ngrok.com/download
+    - Run ngrok: 
+      ```bash
+      ngrok http 3000
+      ```
+    - Use the provided HTTPS URL in your Slack app configuration for local development.
+  
+## Usage
+
+1. **Search for Recipes**: Use the search bar to find recipes.
+2. **Infinite Scroll**: Scroll through endless recipe suggestions.
+3. **Add to Favorites**: Click on the heart icon to add recipes to your favorites.
+4. **Switch Themes**: Toggle between dark and light mode using the theme switcher.
+5. **Authentication**: Sign in using your preferred method (configured in NextAuth).
+
+
+## License
+
+This project is licensed under the ME License.
