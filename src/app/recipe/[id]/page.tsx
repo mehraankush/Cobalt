@@ -12,7 +12,7 @@ import { useGetSingleRecipies } from '@/services/api/RecipeApis'
 import { DummtRecipeDetails } from '@/data/Recipe'
 
 
-const page = ({ params }: { params: { id: string } }) => {
+const Page = ({ params }: { params: { id: string } }) => {
     const { data: recipe } = useGetSingleRecipies(params.id)
     const [recipeDetails, setrecipeDetails] = useState(recipe || DummtRecipeDetails)
  
@@ -116,4 +116,4 @@ const page = ({ params }: { params: { id: string } }) => {
     )
 }
 
-export default page
+export default Page
