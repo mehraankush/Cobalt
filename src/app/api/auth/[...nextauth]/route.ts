@@ -9,8 +9,8 @@ const handler = NextAuth({
             clientSecret: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET ?? "",
         }),
         SlackProvider({
-            clientId: process.env.SLACK_CLIENT_ID ?? "",
-            clientSecret: process.env.SLACK_CLIENT_SECRET || ""
+            clientId: process.env.NEXT_PUBLIC_SLACK_CLIENT_ID ?? "",
+            clientSecret: process.env.NEXT_PUBLIC_SLACK_CLIENT_SECRET || ""
         })
     ],
     pages: {
