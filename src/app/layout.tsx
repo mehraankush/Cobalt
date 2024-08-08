@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { ThemeProviders } from "@/components/Providers/theme-provider";
+import NavbarComponent from "@/components/common/NavbarComponent";
+import QueryClientProviderWrapper from "@/components/Providers/QuertProvider";
+import ReduxProvider from "@/components/Providers/ReduxProvider";
 import "./globals.css";
+import { Toaster } from 'react-hot-toast';
+import SessionProviders from "@/components/Providers/SessionProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +22,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body>
+        <SessionProviders>
+          <ThemeProviders >
+            <QueryClientProviderWrapper>
+              <ReduxProvider>
+                <NavbarComponent />
+                <main>{children}</main>
+                <Toaster position="top-right" />
+              </ReduxProvider>
+            </QueryClientProviderWrapper>
+          </ThemeProviders>
+        </SessionProviders>
+      </body>
     </html>
   );
 }
