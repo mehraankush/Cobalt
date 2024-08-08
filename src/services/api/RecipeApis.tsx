@@ -47,9 +47,10 @@ export const fetchAllRecipies = async () => {
         throw new Error(res.data.message || "Failed to fetch Recipes");
     return res.data;
 };
-export const fetchAllRecipiesInfinity = async ({ nextPage = 0 }: { nextPage :number}) => {
-    console.log(nextPage,"nextpagw")
-    const res = await AlertAxios.get(`/complexSearch?apiKey=${process.env.NEXT_PUBLIC_API_KEY}&offset=${nextPage}&number=10`);
+
+export const fetchAllRecipiesInfinity = async (page:number) => {
+    console.log(page,"nextpagw")
+    const res = await AlertAxios.get(`/complexSearch?apiKey=${process.env.NEXT_PUBLIC_API_KEY}&offset=${page}&number=20`);
 
     if (!res) throw new Error("Something went wrong!");
     if (res.status !== 200)

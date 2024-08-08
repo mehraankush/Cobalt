@@ -1,5 +1,5 @@
 "use client"
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Image from "next/image";
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
@@ -14,7 +14,7 @@ import {
     CardFooter,
     CardHeader,
 } from "@/components/ui/card"
-import { useGetAllRecipies, useGetQueriedRecipies } from '@/services/api/RecipeApis';
+import { fetchAllRecipiesInfinity, useGetAllRecipies, useGetQueriedRecipies } from '@/services/api/RecipeApis';
 
 import { addToCart } from '@/Redux/slices/cardSlice';
 import { Button } from '@/components/ui/button';
@@ -23,6 +23,7 @@ import { DummyRecipes } from '@/data/Recipe';
 
 const HomeComponent = () => {
 
+  const observer = useRef<IntersectionObserver | null>(null);
     const router = useRouter();
     const { data: session } = useSession()
     const { data: AllRecipes, isLoading } = useGetAllRecipies();
@@ -31,10 +32,31 @@ const HomeComponent = () => {
     const { mutate } = useGetQueriedRecipies()
     const [allRecipes, setallRecipes] = useState<any>(AllRecipes || DummyRecipes);
 
+    const [hasMore, setHasMore] = useState(true);
+    const [page, setPage] = useState(1);
+
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
         setSearchInput(value);
     };
+    const fetchData = async () => {
+        const response = await fetchAllRecipiesInfinity(page);
+        console.log("fresponseirst", response)
+        if (response?.results) {
+            setallRecipes((prevRecipes:any) => ({
+                ...prevRecipes,
+                results: [...prevRecipes.results, ...response.results],
+            }));
+        }
+        if (response?.results?.length === 0) {
+            setHasMore(false);
+        }
+        console.log(page,"PAges")
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, [page]);
 
     const onConnectionClick = useCallback(async (event: React.MouseEvent<HTMLDivElement>) => {
         const target = event.target as HTMLElement;
@@ -45,7 +67,6 @@ const HomeComponent = () => {
             router.push(`/recipe/${id}`)
         }
     }, []);
-
     const handleAddToCart = async (imageUrl: string, title: string) => {
         if (!session) {
             router.push('/login')
@@ -74,6 +95,17 @@ const HomeComponent = () => {
         })
     }
 
+    const lastItemRef = useCallback((node: HTMLElement | null) => {
+        if (observer.current) observer.current.disconnect();
+        observer.current = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting && hasMore) {
+                setPage((prevPage) => prevPage + 1);
+            }
+        });
+        if (node) observer.current.observe(node);
+    }, [hasMore]);
+
+
     return (
         <div>
             <div className='mt-10 flex justify-center items-center'>
@@ -100,7 +132,7 @@ const HomeComponent = () => {
                         allRecipes?.results?.map((recipe: any, i: number) => (
                             <Card
                                 key={i}
-
+                                ref={i === allRecipes.results.length - 1 ? lastItemRef : null}
                                 className="w-[400px] cursor-pointer rounded dark:bg-slate-900"
                             >
                                 <CardHeader className='p-3 flex justify-center'
@@ -141,7 +173,7 @@ const HomeComponent = () => {
                 </div>
             </div>
             {allRecipes.length === 0 && <p className='text-center w-full dark:text-white'>Try Something Else No Result Found...</p>}
-            {isLoading && <div className='flex justify-center py-10'>
+            {!hasMore || isLoading && <div className='flex justify-center py-10'>
                 <Oval
                     visible={true}
                     height="80"
@@ -153,9 +185,6 @@ const HomeComponent = () => {
                 />
             </div>
             }
-            {/* <InfiniteScroll fetchMore={fetchAllRecipies} loadingComponent={<p>Loading...</p>}>
-                {(items: any) => JSON.stringify(items)}
-            </InfiniteScroll> */}
         </div>
     )
 }
